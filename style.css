@@ -44,15 +44,16 @@ body {
   text-align: center;
 }
 
+/* Фото в круге с цветной обводкой */
 .avatar {
-  width: 112px;
-  height: 112px;
+  display: block;
+  width: 160px;
+  height: 160px;
   margin: 0 auto 24px;
   border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 40px;
-  font-weight: 800;
+  object-fit: cover;
+  object-position: center 30%;
+  padding: 4px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   box-shadow: 0 10px 40px rgba(124, 92, 255, 0.45);
 }
