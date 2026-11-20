@@ -4,6 +4,7 @@
 // { title: "Название", text: "Короткое описание", url: "ссылка на видео" }
 // Подходят ссылки на YouTube (и Shorts), Instagram (Reels и посты), TikTok
 // или путь к своему файлу, например "videos/korporativ.mp4".
+// Для своего файла можно указать обложку: poster: "videos/korporativ.jpg".
 const projects = [
   {
     name: "Tram in the Raive",
@@ -16,7 +17,7 @@ const projects = [
     name: "Teambuilding",
     text: "",
     videos: [
-      { url: "https://www.instagram.com/reel/DcaxZ0Us_kJ/" },
+      { url: "videos/teambuilding.mp4", poster: "videos/teambuilding.jpg" },
     ],
   },
 ];
@@ -105,6 +106,7 @@ function showProject(index) {
     } else if (player?.file) {
       const video = document.createElement("video");
       video.src = player.file;
+      if (p.poster) video.poster = p.poster;
       video.controls = true;
       video.preload = "metadata";
       video.playsInline = true;
