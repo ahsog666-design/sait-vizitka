@@ -9,6 +9,7 @@ const projects = [
     name: "Tram in the Raive",
     text: "",
     videos: [
+      { url: "https://www.instagram.com/p/DezGtLrDswV/" },
     ],
   },
   {
