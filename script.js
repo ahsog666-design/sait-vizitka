@@ -8,9 +8,12 @@
 const projects = [
   {
     name: "Tram in the Raive",
-    text: "Фотоотчёт",
-    // Фотоотчёт: большие фото лежат в images/tram, маленькие превью в images/tram/thumbs
-    photos: { folder: "images/tram", count: 20 },
+    text: "",
+    // Папки с фотоотчётами. Чтобы добавить папку, скопируйте строку { name: ... }.
+    // Большие фото лежат в folder, маленькие превью в folder/thumbs (01.jpg, 02.jpg, ...)
+    albums: [
+      { name: "1", folder: "images/tram/1", count: 20 },
+    ],
     videos: [
     ],
   },
@@ -82,10 +85,10 @@ function showProject(index) {
   about.textContent = project.text || "";
   about.hidden = !project.text;
   box.innerHTML = "";
-  box.classList.toggle("gallery", !!project.photos);
+  box.classList.remove("gallery", "albums");
 
-  if (project.photos) {
-    renderGallery(box, project.photos);
+  if (project.albums) {
+    renderAlbums(box, project);
     return;
   }
 
@@ -154,6 +157,61 @@ function showProject(index) {
 // ===== Фотоотчёт =====
 let galleryPhotos = [];
 let galleryIndex = 0;
+
+// Список папок с фотоотчётами
+function renderAlbums(box, project) {
+  box.innerHTML = "";
+  box.classList.remove("gallery");
+  box.classList.add("albums");
+
+  project.albums.forEach((album) => {
+    const btn = document.createElement("button");
+    btn.className = "album";
+    btn.type = "button";
+
+    const cover = document.createElement("div");
+    cover.className = "album-cover";
+    // Обложка папки: первые три фото веером
+    for (let i = 3; i >= 1; i--) {
+      const img = document.createElement("img");
+      img.src = `${album.folder}/thumbs/${String(Math.min(i, album.count)).padStart(2, "0")}.jpg`;
+      img.alt = "";
+      img.loading = "lazy";
+      cover.appendChild(img);
+    }
+
+    const info = document.createElement("div");
+    info.className = "album-info";
+    info.innerHTML = `<span class="album-icon">📁</span><strong></strong><span class="album-count"></span>`;
+    info.querySelector("strong").textContent = album.name;
+    info.querySelector(".album-count").textContent = `${album.count} фото`;
+
+    btn.append(cover, info);
+    btn.addEventListener("click", () => openAlbum(box, project, album));
+    box.appendChild(btn);
+  });
+}
+
+// Открытая папка: кнопка «Назад» и сетка фото
+function openAlbum(box, project, album) {
+  box.innerHTML = "";
+  box.classList.remove("albums");
+  box.classList.add("gallery");
+
+  const bar = document.createElement("div");
+  bar.className = "album-bar";
+  const back = document.createElement("button");
+  back.className = "back";
+  back.type = "button";
+  back.textContent = "← Все папки";
+  back.addEventListener("click", () => renderAlbums(box, project));
+  const title = document.createElement("span");
+  title.textContent = `📁 ${album.name} · ${album.count} фото`;
+  bar.append(back, title);
+  box.appendChild(bar);
+
+  renderGallery(box, album);
+}
 
 function renderGallery(box, { folder, count }) {
   galleryPhotos = [];
