@@ -16,6 +16,7 @@ const projects = [
     name: "Teambuilding",
     text: "",
     videos: [
+      { url: "https://www.instagram.com/reel/DcaxZ0Us_kJ/" },
     ],
   },
 ];
