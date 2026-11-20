@@ -1,9 +1,16 @@
 // ===== Мои проекты =====
-// Чтобы добавить видео, допишите строку в этот список:
+// Каждый проект — отдельная вкладка. Чтобы добавить вкладку, скопируйте блок { name: ... }.
+// Чтобы добавить видео в проект, допишите строку в его список videos:
 // { title: "Название", text: "Короткое описание", url: "ссылка на видео" }
 // Подходят ссылки на YouTube (и Shorts), Instagram (Reels и посты), TikTok
 // или путь к своему файлу, например "videos/korporativ.mp4".
 const projects = [
+  {
+    name: "Tram in the Raive",
+    text: "",
+    videos: [
+    ],
+  },
 ];
 
 // Превращает ссылку в встроенный плеер
@@ -35,15 +42,43 @@ function makePlayer(url) {
 }
 
 function renderProjects() {
+  const tabs = document.getElementById("project-tabs");
   const box = document.getElementById("videos");
-  if (!box) return;
+  if (!tabs || !box) return;
 
-  if (projects.length === 0) {
-    box.innerHTML = '<p class="empty">Скоро здесь появятся видео с моих мероприятий 🎬</p>';
+  projects.forEach((project, i) => {
+    const btn = document.createElement("button");
+    btn.className = "tab";
+    btn.type = "button";
+    btn.role = "tab";
+    btn.textContent = project.name;
+    btn.addEventListener("click", () => showProject(i));
+    tabs.appendChild(btn);
+  });
+
+  if (projects.length > 0) showProject(0);
+}
+
+function showProject(index) {
+  const project = projects[index];
+  const box = document.getElementById("videos");
+  const about = document.getElementById("project-text");
+
+  document.querySelectorAll("#project-tabs .tab").forEach((btn, i) => {
+    btn.classList.toggle("active", i === index);
+    btn.setAttribute("aria-selected", i === index);
+  });
+
+  about.textContent = project.text || "";
+  about.hidden = !project.text;
+  box.innerHTML = "";
+
+  if (project.videos.length === 0) {
+    box.innerHTML = '<p class="empty">Скоро здесь появятся видео 🎬</p>';
     return;
   }
 
-  projects.forEach((p) => {
+  project.videos.forEach((p) => {
     const player = makePlayer(p.url);
     const card = document.createElement("article");
     card.className = "video-card";
