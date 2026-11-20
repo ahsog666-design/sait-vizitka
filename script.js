@@ -12,7 +12,7 @@ const projects = [
     // Папки с фотоотчётами. Чтобы добавить папку, скопируйте строку { name: ... }.
     // Большие фото лежат в folder, маленькие превью в folder/thumbs (01.jpg, 02.jpg, ...)
     albums: [
-      { name: "1", folder: "images/tram/1", count: 20 },
+      { name: "14 октября", folder: "images/tram/1", count: 20 },
     ],
     videos: [
     ],
