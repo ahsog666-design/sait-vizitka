@@ -7,11 +7,21 @@
   <meta name="description" content="Георгий Ермаков — ведущий мероприятий, бывший арт-директор клубов, один из основателей агентства тимбилдингов. Работаем по всему Казахстану.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tiny5&family=JetBrains+Mono:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="glow" aria-hidden="true"></div>
+  <!-- Фон: оранжевая спираль из пиксельных клеток + зерно -->
+  <canvas class="shader" id="shader" aria-hidden="true"></canvas>
+  <div class="shade" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Красная бегущая строка -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>ведущий мероприятий · тимбилдинги по всему Казахстану · Tram in the Raive · пишите в Telegram @geo_ermakov · </span><span>ведущий мероприятий · тимбилдинги по всему Казахстану · Tram in the Raive · пишите в Telegram @geo_ermakov · </span>
+    </div>
+  </div>
 
   <header class="hero">
     <img class="avatar" src="images/georgiy.jpg" alt="Георгий Ермаков" width="160" height="160">
@@ -92,6 +102,7 @@
     <div class="lb-count" id="lightbox-count"></div>
   </div>
 
+  <script src="js/dither-bg.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
