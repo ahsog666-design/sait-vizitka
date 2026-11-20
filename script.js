@@ -11,6 +11,12 @@ const projects = [
     videos: [
     ],
   },
+  {
+    name: "Teambuilding",
+    text: "",
+    videos: [
+    ],
+  },
 ];
 
 // Превращает ссылку в встроенный плеер
