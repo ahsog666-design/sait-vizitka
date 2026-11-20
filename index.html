@@ -53,7 +53,7 @@
 
     <section class="card reveal" id="projects">
       <h2>Мои проекты</h2>
-      <p class="section-note">Видео с мероприятий, которые я вёл и организовывал.</p>
+      <p class="section-note">Фото и видео с мероприятий, которые я вёл и организовывал.</p>
       <div class="tabs" id="project-tabs" role="tablist"></div>
       <p class="project-text" id="project-text" hidden></p>
       <div class="videos" id="videos"></div>
@@ -82,6 +82,15 @@
   <footer>
     <p>© <span id="year"></span> Георгий Ермаков · Казахстан</p>
   </footer>
+
+  <!-- Просмотр фото на весь экран -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-btn lb-close" id="lightbox-close" type="button" aria-label="Закрыть">✕</button>
+    <button class="lb-btn lb-prev" id="lightbox-prev" type="button" aria-label="Предыдущее фото">‹</button>
+    <img id="lightbox-img" alt="Фото с мероприятия">
+    <button class="lb-btn lb-next" id="lightbox-next" type="button" aria-label="Следующее фото">›</button>
+    <div class="lb-count" id="lightbox-count"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>

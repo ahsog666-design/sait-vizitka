@@ -8,9 +8,10 @@
 const projects = [
   {
     name: "Tram in the Raive",
-    text: "",
+    text: "Фотоотчёт",
+    // Фотоотчёт: большие фото лежат в images/tram, маленькие превью в images/tram/thumbs
+    photos: { folder: "images/tram", count: 20 },
     videos: [
-      { url: "https://www.instagram.com/p/DezGtLrDswV/" },
     ],
   },
   {
@@ -81,6 +82,12 @@ function showProject(index) {
   about.textContent = project.text || "";
   about.hidden = !project.text;
   box.innerHTML = "";
+  box.classList.toggle("gallery", !!project.photos);
+
+  if (project.photos) {
+    renderGallery(box, project.photos);
+    return;
+  }
 
   if (project.videos.length === 0) {
     box.innerHTML = '<p class="empty">Скоро здесь появятся видео 🎬</p>';
@@ -143,6 +150,80 @@ function showProject(index) {
     box.appendChild(card);
   });
 }
+
+// ===== Фотоотчёт =====
+let galleryPhotos = [];
+let galleryIndex = 0;
+
+function renderGallery(box, { folder, count }) {
+  galleryPhotos = [];
+  for (let i = 1; i <= count; i++) {
+    const name = String(i).padStart(2, "0") + ".jpg";
+    galleryPhotos.push(`${folder}/${name}`);
+
+    const btn = document.createElement("button");
+    btn.className = "photo";
+    btn.type = "button";
+    btn.setAttribute("aria-label", `Открыть фото ${i}`);
+    const img = document.createElement("img");
+    img.src = `${folder}/thumbs/${name}`;
+    img.alt = "";
+    img.loading = "lazy";
+    btn.appendChild(img);
+    btn.addEventListener("click", () => openLightbox(i - 1));
+    box.appendChild(btn);
+  }
+}
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const lightboxCount = document.getElementById("lightbox-count");
+
+function openLightbox(index) {
+  galleryIndex = index;
+  updateLightbox();
+  lightbox.hidden = false;
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  lightbox.hidden = true;
+  document.body.style.overflow = "";
+}
+
+function stepLightbox(delta) {
+  galleryIndex = (galleryIndex + delta + galleryPhotos.length) % galleryPhotos.length;
+  updateLightbox();
+}
+
+function updateLightbox() {
+  lightboxImg.src = galleryPhotos[galleryIndex];
+  lightboxCount.textContent = `${galleryIndex + 1} / ${galleryPhotos.length}`;
+  // Заранее подгружаем соседнее фото, чтобы листать без задержки
+  new Image().src = galleryPhotos[(galleryIndex + 1) % galleryPhotos.length];
+}
+
+document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+document.getElementById("lightbox-prev").addEventListener("click", () => stepLightbox(-1));
+document.getElementById("lightbox-next").addEventListener("click", () => stepLightbox(1));
+lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
+
+document.addEventListener("keydown", (e) => {
+  if (lightbox.hidden) return;
+  if (e.key === "Escape") closeLightbox();
+  if (e.key === "ArrowLeft") stepLightbox(-1);
+  if (e.key === "ArrowRight") stepLightbox(1);
+});
+
+// Листание свайпом на телефоне
+let touchX = null;
+lightbox.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+lightbox.addEventListener("touchend", (e) => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 50) stepLightbox(dx < 0 ? 1 : -1);
+  touchX = null;
+});
 
 renderProjects();
 
