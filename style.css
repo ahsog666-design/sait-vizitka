@@ -320,16 +320,16 @@ h3 { margin: 8px 0 4px; font-size: 18px; }
   border-radius: 16px;
 }
 
-.timeline { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
-.timeline li {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 12px;
-  padding-left: 14px;
+/* Опыт: один блок с цветной линией слева */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 2px 0 2px 16px;
   border-left: 2px solid var(--accent);
+  display: grid;
+  gap: 10px;
+  color: var(--muted);
 }
-.timeline strong { color: var(--accent-2); font-weight: 600; }
-.timeline span { color: var(--muted); }
 
 .contacts-note { margin-bottom: 16px !important; }
 
