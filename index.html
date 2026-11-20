@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ваше Имя — визитка</title>
+  <meta name="description" content="Личная страница: обо мне, проекты и контакты.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="avatar" aria-hidden="true">ВИ</div>
+    <p class="hello">Привет, я</p>
+    <h1>Ваше Имя</h1>
+    <p class="tagline">Начинающий разработчик и вайб-кодер. Делаю сайты и маленькие приложения с помощью ИИ.</p>
+    <nav class="links">
+      <a class="btn primary" href="#contacts">Связаться</a>
+      <a class="btn" href="#projects">Мои проекты</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card reveal" id="about">
+      <h2>Обо мне</h2>
+      <p>Здесь будет пара предложений о вас: чем занимаетесь, что любите, откуда вы и чему сейчас учитесь.</p>
+    </section>
+
+    <section class="card reveal">
+      <h2>Интересы</h2>
+      <ul class="tags">
+        <li>Вайб-кодинг</li>
+        <li>Веб-дизайн</li>
+        <li>Искусственный интеллект</li>
+        <li>Игры</li>
+        <li>Путешествия</li>
+      </ul>
+    </section>
+
+    <section class="card reveal" id="projects">
+      <h2>Проекты</h2>
+      <div class="projects">
+        <article class="project">
+          <span class="emoji">🌐</span>
+          <h3>Сайт-визитка</h3>
+          <p>Эта самая страница. Мой первый проект.</p>
+        </article>
+        <article class="project soon">
+          <span class="emoji">🎮</span>
+          <h3>Скоро</h3>
+          <p>Следующий проект появится здесь.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="card reveal" id="contacts">
+      <h2>Контакты</h2>
+      <div class="contacts">
+        <a href="https://github.com/ahsog666-design" target="_blank" rel="noopener">GitHub</a>
+        <a href="#" target="_blank" rel="noopener">Telegram</a>
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Ваше Имя · Сделано с помощью Claude</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

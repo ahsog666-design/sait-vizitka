@@ -1,0 +1,145 @@
+/* ===== Цвета: поменяйте здесь, и изменится весь сайт ===== */
+:root {
+  --bg: #0d0f1a;
+  --card: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #eef0ff;
+  --muted: #9aa0c3;
+  --accent: #7c5cff;
+  --accent-2: #22d3ee;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: "Manrope", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 0 16px;
+  overflow-x: hidden;
+}
+
+/* Мягкое цветное свечение на фоне */
+.glow {
+  position: fixed;
+  inset: -20% -10% auto;
+  height: 70vh;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(124, 92, 255, 0.35), transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(34, 211, 238, 0.25), transparent 50%);
+  filter: blur(40px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ===== Шапка ===== */
+.hero {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 96px 0 64px;
+  text-align: center;
+}
+
+.avatar {
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 40px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 10px 40px rgba(124, 92, 255, 0.45);
+}
+
+.hello { margin: 0; color: var(--muted); font-size: 18px; }
+
+h1 {
+  margin: 4px 0 12px;
+  font-size: clamp(40px, 8vw, 64px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #fff, #c9c2ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline { color: var(--muted); font-size: 18px; max-width: 520px; margin: 0 auto 32px; }
+
+.links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s, background 0.2s;
+}
+.btn:hover { transform: translateY(-2px); background: var(--card); }
+.btn.primary { background: var(--accent); border-color: var(--accent); }
+.btn.primary:hover { background: #6a48ff; }
+
+/* ===== Карточки-разделы ===== */
+main { max-width: 720px; margin: 0 auto; display: grid; gap: 20px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  backdrop-filter: blur(10px);
+}
+
+h2 { margin: 0 0 12px; font-size: 22px; }
+h3 { margin: 8px 0 4px; font-size: 18px; }
+.card p { margin: 0; color: var(--muted); }
+
+.tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.tags li {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(124, 92, 255, 0.15);
+  border: 1px solid rgba(124, 92, 255, 0.35);
+  font-size: 14px;
+}
+
+.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.project {
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.project:hover { transform: translateY(-4px); border-color: var(--accent); }
+.project.soon { opacity: 0.6; border-style: dashed; }
+.emoji { font-size: 28px; }
+
+.contacts { display: flex; flex-wrap: wrap; gap: 12px; }
+.contacts a {
+  color: var(--accent-2);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+.contacts a:hover { background: var(--card); }
+
+footer { text-align: center; color: var(--muted); font-size: 14px; padding: 48px 0; }
+
+/* Плавное появление при прокрутке */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s, transform 0.6s; }
+.reveal.visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
