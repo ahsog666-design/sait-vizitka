@@ -575,37 +575,55 @@ footer {
 /* Видео рядом с папками фотоотчётов */
 .album-video { align-self: start; margin-top: 8px; }
 
-/* ===== Телефон: фото «Обо мне» во всю ширину, заголовок поверх на затемнении ===== */
+/* ===== «Обо мне»: фото во всю ширину экрана, заголовок поверх на затемнении ===== */
+#about { display: grid; grid-template-columns: 1fr; padding-top: 0; }
+#about .about { display: contents; }
+#about .about-photo,
+#about .section-head { grid-row: 1; grid-column: 1; }
+#about .about-text { grid-row: 2; padding-top: 28px; }
+#about .about-photo {
+  position: relative;
+  margin: 0 calc(50% - 50vw);
+}
+#about .about-photo img {
+  aspect-ratio: auto;
+  width: 60%;
+  height: 88svh;
+  min-height: 520px;
+  margin-left: auto;
+  object-position: center 18%;
+  border-radius: 0;
+}
+/* Затемнение снизу вверх и слева: на нём читается текст */
+#about .about-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, var(--bg) 0%, rgba(10, 13, 11, 0.75) 25%, rgba(10, 13, 11, 0.3) 50%, transparent 70%),
+    linear-gradient(90deg, var(--bg) 40%, rgba(10, 13, 11, 0.5) 55%, transparent 75%);
+}
+#about .section-head {
+  position: relative;
+  z-index: 1;
+  align-self: end;
+  margin: 0;
+  padding-bottom: 8%;
+}
+#about .ghost { display: none; }
+#about h2 { text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5); }
+
 @media (max-width: 860px) {
-  #about { display: grid; grid-template-columns: 1fr; padding-top: 0; }
-  #about .about { display: contents; }
-  #about .about-photo,
-  #about .section-head { grid-row: 1; grid-column: 1; }
-  #about .about-text { grid-row: 2; padding-top: 28px; }
-  #about .about-photo {
-    position: relative;
-    margin: 0 -16px;
-  }
   #about .about-photo img {
+    width: 100%;
+    height: auto;
+    min-height: 0;
     aspect-ratio: 4 / 5;
     max-height: 82svh;
     object-position: center 15%;
-    border-radius: 0;
   }
-  /* Затемнение снизу вверх: на нём читается текст */
   #about .about-photo::after {
-    content: "";
-    position: absolute;
-    inset: 0;
     background: linear-gradient(0deg, var(--bg) 0%, rgba(10, 13, 11, 0.8) 22%, rgba(10, 13, 11, 0.35) 48%, transparent 65%);
   }
-  #about .section-head {
-    position: relative;
-    z-index: 1;
-    align-self: end;
-    margin: 0;
-    padding-bottom: 12%;
-  }
-  #about .ghost { display: none; }
-  #about h2 { text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5); }
+  #about .section-head { padding-bottom: 4%; }
 }
