@@ -14,7 +14,9 @@ const projects = [
     albums: [
       { name: "14 октября", folder: "images/tram/1", count: 20 },
     ],
+    // vertical: true — для вертикальных видео с телефона
     videos: [
+      { url: "videos/tram-raive.mp4", poster: "videos/tram-raive.jpg", vertical: true },
     ],
   },
   {
@@ -97,13 +99,18 @@ function showProject(index) {
     return;
   }
 
-  project.videos.forEach((p) => {
+  project.videos.forEach((p) => box.appendChild(makeVideoCard(p)));
+}
+
+// Карточка одного видео
+function makeVideoCard(p) {
     const player = makePlayer(p.url);
     const card = document.createElement("article");
     card.className = "video-card";
 
     const frame = document.createElement("div");
-    frame.className = "video-frame" + (player?.vertical ? " vertical" : "") + (player?.tall ? " tall" : "");
+    const vertical = p.vertical || player?.vertical;
+    frame.className = "video-frame" + (vertical ? " vertical" : "") + (player?.tall ? " tall" : "");
 
     if (player?.src) {
       const iframe = document.createElement("iframe");
@@ -150,8 +157,7 @@ function showProject(index) {
       card.appendChild(info);
     }
 
-    box.appendChild(card);
-  });
+    return card;
 }
 
 // ===== Фотоотчёт =====
@@ -189,6 +195,13 @@ function renderAlbums(box, project) {
     btn.append(cover, info);
     btn.addEventListener("click", () => openAlbum(box, project, album));
     box.appendChild(btn);
+  });
+
+  // Видео проекта — рядом с папками
+  (project.videos || []).forEach((p) => {
+    const card = makeVideoCard(p);
+    card.classList.add("album-video");
+    box.appendChild(card);
   });
 }
 

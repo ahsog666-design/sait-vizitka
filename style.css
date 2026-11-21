@@ -571,3 +571,6 @@ footer {
   .reveal { opacity: 1; transform: none; transition: none; }
   .hero-bg, .badge svg, .fab { animation: none; }
 }
+
+/* Видео рядом с папками фотоотчётов */
+.album-video { align-self: start; margin-top: 8px; }
