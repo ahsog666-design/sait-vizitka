@@ -4,16 +4,23 @@
    Цвета меняются здесь, и меняется весь сайт. */
 :root {
   color-scheme: dark;
-  --bg: #0b0b0d;
-  --bg-2: #131317;
-  --text: #f3f3f6;
-  --muted: #9c9cab;
-  --accent: #8b6cff;
-  --accent-2: #b9a6ff;
-  --line: rgba(255, 255, 255, 0.1);
-  --head: "Unbounded", "Manrope", system-ui, sans-serif;
-  --body: "Manrope", system-ui, -apple-system, sans-serif;
-  --nav-h: 72px;
+  --bg: #0a0d0b;
+  --bg-2: #121714;
+  --text: #ffffff;
+  --muted: #9aa69f;
+  --accent: #00d66f;
+  --accent-2: #4dffa4;
+  --line: rgba(255, 255, 255, 0.12);
+  /* Светлые разделы */
+  --light-bg: #ffffff;
+  --light-text: #212121;
+  --light-muted: #6b6b6b;
+  --light-line: #e3e3e3;
+  /* Шрифты: тонкий широкий для заголовков, Montserrat для текста, Tektur для слов-призраков */
+  --head: "Unbounded", "Montserrat", system-ui, sans-serif;
+  --body: "Montserrat", system-ui, -apple-system, sans-serif;
+  --ghost: "Tektur", "Unbounded", sans-serif;
+  --nav-h: 76px;
 }
 
 * { box-sizing: border-box; }
@@ -47,8 +54,8 @@ img { max-width: 100%; }
 .btn:hover { transform: translateY(-2px); }
 .btn.primary { background: var(--accent); color: #fff; }
 .btn.primary:hover { background: var(--accent-2); color: var(--bg); }
-.btn.outline { border-color: rgba(255, 255, 255, 0.55); }
-.btn.outline:hover { border-color: var(--accent-2); color: var(--accent-2); }
+.btn.outline { border-color: var(--accent); color: var(--accent); }
+.btn.outline:hover { background: var(--accent); color: #fff; }
 .btn.small { padding: 9px 18px; font-size: 13px; }
 
 /* ===== Меню ===== */
@@ -133,10 +140,21 @@ img { max-width: 100%; }
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(90deg, rgba(11, 11, 13, 0.92) 0%, rgba(11, 11, 13, 0.6) 55%, rgba(11, 11, 13, 0.35) 100%),
-    linear-gradient(0deg, var(--bg) 0%, transparent 35%),
+    linear-gradient(90deg, rgba(10, 13, 11, 0.9) 0%, rgba(10, 13, 11, 0.55) 55%, rgba(10, 13, 11, 0.3) 100%),
     url("images/tram/1/01.jpg") center 30% / cover no-repeat;
+  filter: grayscale(0.85) contrast(1.05);
   animation: slow-zoom 24s ease-in-out infinite alternate;
+}
+/* Зелёный отсвет снизу первого экрана */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 45% at 30% 100%, rgba(0, 214, 111, 0.35), transparent 70%),
+    linear-gradient(0deg, var(--bg) 0%, transparent 18%);
 }
 @keyframes slow-zoom { from { transform: scale(1); } to { transform: scale(1.08); } }
 
@@ -152,7 +170,7 @@ img { max-width: 100%; }
 h1 {
   margin: 0 0 22px;
   font-family: var(--head);
-  font-weight: 400;
+  font-weight: 300;
   font-size: clamp(42px, 8.5vw, 112px);
   line-height: 0.98;
   letter-spacing: -0.01em;
@@ -164,7 +182,8 @@ h1 {
   font-size: clamp(17px, 2vw, 21px);
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: #d6d6de;
+  font-weight: 500;
+  color: #e6ece8;
 }
 .hero-buttons { display: flex; flex-wrap: wrap; gap: 14px; }
 
@@ -181,7 +200,7 @@ h1 {
   place-items: center;
   color: #fff;
   text-decoration: none;
-  box-shadow: 0 10px 40px rgba(139, 108, 255, 0.45);
+  box-shadow: 0 10px 40px rgba(0, 214, 111, 0.45);
   transition: transform 0.2s;
 }
 .badge:hover { transform: scale(1.06); }
@@ -207,13 +226,12 @@ main { padding: 0 24px; }
   left: -0.04em;
   top: -0.42em;
   z-index: -1;
-  font-family: var(--head);
-  font-weight: 800;
+  font-family: var(--ghost);
+  font-weight: 700;
   font-size: clamp(64px, 13vw, 180px);
   line-height: 1;
   text-transform: lowercase;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(139, 108, 255, 0.3);
+  color: rgba(0, 214, 111, 0.16);
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
@@ -229,7 +247,7 @@ main { padding: 0 24px; }
 h2 {
   margin: 0;
   font-family: var(--head);
-  font-weight: 400;
+  font-weight: 300;
   font-size: clamp(30px, 5vw, 56px);
   line-height: 1.05;
   text-transform: uppercase;
@@ -240,7 +258,7 @@ h3 { margin: 0 0 8px; font-size: 19px; font-weight: 800; }
 .about { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 56px; align-items: start; }
 #about .section-head { margin-bottom: 32px; }
 #about .about-photo { margin-top: -120px; }
-.about-text p { margin: 0 0 18px; font-size: 18px; color: #cfcfd8; max-width: 60ch; }
+.about-text p { margin: 0 0 18px; font-size: 18px; color: #d4dbd7; max-width: 60ch; }
 .about-text .btn { margin-top: 12px; }
 .about-photo img {
   display: block;
@@ -269,7 +287,7 @@ h3 { margin: 0 0 8px; font-size: 19px; font-weight: 800; }
   font-size: 15px;
   transition: border-color 0.2s, background 0.2s, color 0.2s;
 }
-.pills li:hover { border-color: var(--accent); background: rgba(139, 108, 255, 0.12); color: var(--accent-2); }
+.pills li:hover { border-color: var(--accent); background: rgba(0, 214, 111, 0.12); color: var(--accent-2); }
 
 /* Опыт: 4 преимущества */
 .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
@@ -288,7 +306,7 @@ h3 { margin: 0 0 8px; font-size: 19px; font-weight: 800; }
   height: 56px;
   margin-bottom: 20px;
   border-radius: 16px;
-  background: rgba(139, 108, 255, 0.15);
+  background: rgba(0, 214, 111, 0.15);
   font-size: 26px;
 }
 .feature p { margin: 0; color: var(--muted); font-size: 15px; }
@@ -319,7 +337,7 @@ h3 { margin: 0 0 8px; font-size: 19px; font-weight: 800; }
   text-decoration: none;
   transition: border-color 0.2s, background 0.2s;
 }
-.contact:hover { border-color: var(--accent); background: rgba(139, 108, 255, 0.1); }
+.contact:hover { border-color: var(--accent); background: rgba(0, 214, 111, 0.1); }
 .contact-name { font-weight: 800; }
 .contact-value { color: var(--accent-2); font-weight: 600; }
 
@@ -343,14 +361,14 @@ footer {
   place-items: center;
   background: var(--accent);
   color: #fff;
-  box-shadow: 0 0 0 0 rgba(139, 108, 255, 0.6);
+  box-shadow: 0 0 0 0 rgba(0, 214, 111, 0.6);
   animation: pulse 2.4s infinite;
 }
 .fab svg { width: 28px; height: 28px; }
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(139, 108, 255, 0.55); }
-  70% { box-shadow: 0 0 0 18px rgba(139, 108, 255, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(139, 108, 255, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(0, 214, 111, 0.55); }
+  70% { box-shadow: 0 0 0 18px rgba(0, 214, 111, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 214, 111, 0); }
 }
 
 /* ===== Проекты: вкладки, папки, фото, видео ===== */
@@ -478,6 +496,28 @@ footer {
 /* Плавное появление при прокрутке */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s, transform 0.7s; }
 .reveal.visible { opacity: 1; transform: none; }
+
+/* ===== Светлые разделы: белый фон во всю ширину экрана ===== */
+.section.light {
+  position: relative;
+  color: var(--light-text);
+  background: var(--light-bg);
+  box-shadow: 0 0 0 100vmax var(--light-bg);
+  clip-path: inset(0 -100vmax);
+  padding-bottom: 96px;
+  margin-top: 72px;
+}
+.section.light + .section.light { margin-top: -1px; padding-top: 24px; }
+.pills li { display: flex; align-items: center; justify-content: center; }
+.section.light .ghost { color: rgba(0, 214, 111, 0.22); z-index: 0; }
+.section.light .label,
+.section.light h2 { position: relative; z-index: 1; }
+.section.light .label { color: #00a856; }
+.section.light .pills li { border-color: var(--light-line); color: var(--light-text); }
+.section.light .pills li:hover { border-color: var(--accent); background: rgba(0, 214, 111, 0.1); color: #00813f; }
+.section.light .feature { background: #f5f7f6; border-color: var(--light-line); }
+.section.light .feature p { color: var(--light-muted); }
+.section.light .feature-icon { background: rgba(0, 214, 111, 0.16); }
 
 /* ===== Планшет ===== */
 @media (max-width: 1024px) {
