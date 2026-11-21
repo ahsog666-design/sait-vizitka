@@ -299,3 +299,22 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 
 document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+// ===== Меню =====
+const nav = document.getElementById("nav");
+const burger = document.getElementById("burger");
+const menu = document.getElementById("menu");
+
+// После прокрутки меню получает тёмную подложку
+function updateNav() { nav.classList.toggle("scrolled", window.scrollY > 40); }
+updateNav();
+window.addEventListener("scroll", updateNav, { passive: true });
+
+// Бургер на телефоне
+function setMenu(open) {
+  menu.classList.toggle("open", open);
+  burger.setAttribute("aria-expanded", open);
+  burger.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+}
+burger.addEventListener("click", () => setMenu(!menu.classList.contains("open")));
+menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
