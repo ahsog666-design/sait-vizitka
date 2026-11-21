@@ -285,18 +285,6 @@ lightbox.addEventListener("touchend", (e) => {
 
 renderProjects();
 
-// Фон: оранжевая спираль из клеток, как на экране «Гоша, включи».
-// Если человек просит меньше анимации или нет WebGL — остаётся просто тёмный фон.
-if (window.mountDitherBackground && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  mountDitherBackground(document.getElementById("shader"), {
-    front: [1.0, 0.486, 0.165], // #ff7c2a
-    back: [0.047, 0.039, 0.035], // #0c0a09
-    opacity: 0.5,
-    pxSize: 4,
-    speed: 0.5,
-  });
-}
-
 // Текущий год в подвале
 document.getElementById("year").textContent = new Date().getFullYear();
 
