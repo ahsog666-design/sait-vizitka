@@ -65,7 +65,7 @@ function renderProjects() {
     const btn = document.createElement("button");
     btn.className = "tab";
     btn.type = "button";
-    btn.role = "tab";
+    btn.setAttribute("role", "tab");
     btn.textContent = project.name;
     btn.addEventListener("click", () => showProject(i));
     tabs.appendChild(btn);
@@ -81,7 +81,7 @@ function showProject(index) {
 
   document.querySelectorAll("#project-tabs .tab").forEach((btn, i) => {
     btn.classList.toggle("active", i === index);
-    btn.setAttribute("aria-selected", i === index);
+    btn.setAttribute("aria-selected", String(i === index));
   });
 
   about.textContent = project.text || "";
@@ -95,11 +95,12 @@ function showProject(index) {
   }
 
   if (project.videos.length === 0) {
-    box.innerHTML = '<p class="empty">Скоро здесь появятся видео 🎬</p>';
+    box.innerHTML = '<p class="empty">Скоро здесь появятся видео</p>';
     return;
   }
 
   project.videos.forEach((p) => box.appendChild(makeVideoCard(p)));
+  replayFade(box);
 }
 
 // Карточка одного видео
@@ -160,6 +161,16 @@ function makeVideoCard(p) {
     return card;
 }
 
+// Иконка папки
+const FOLDER_ICON = '<svg class="album-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4.4l2 2.2h8.6A1.5 1.5 0 0 1 21 8.7v9.8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/></svg>';
+
+// Перезапускает плавное появление блока с проектами
+function replayFade(box) {
+  box.style.animation = "none";
+  void box.offsetWidth;
+  box.style.animation = "";
+}
+
 // ===== Фотоотчёт =====
 let galleryPhotos = [];
 let galleryIndex = 0;
@@ -174,6 +185,7 @@ function renderAlbums(box, project) {
     const btn = document.createElement("button");
     btn.className = "album";
     btn.type = "button";
+    btn.setAttribute("aria-label", `Открыть фотоотчёт «${album.name}», ${album.count} фото`);
 
     const cover = document.createElement("div");
     cover.className = "album-cover";
@@ -188,7 +200,7 @@ function renderAlbums(box, project) {
 
     const info = document.createElement("div");
     info.className = "album-info";
-    info.innerHTML = `<span class="album-icon">📁</span><strong></strong><span class="album-count"></span>`;
+    info.innerHTML = `${FOLDER_ICON}<strong></strong><span class="album-count"></span><span class="album-hint">Открыть фотоотчёт →</span>`;
     info.querySelector("strong").textContent = album.name;
     info.querySelector(".album-count").textContent = `${album.count} фото`;
 
@@ -203,6 +215,7 @@ function renderAlbums(box, project) {
     card.classList.add("album-video");
     box.appendChild(card);
   });
+  replayFade(box);
 }
 
 // Открытая папка: кнопка «Назад» и сетка фото
@@ -217,13 +230,18 @@ function openAlbum(box, project, album) {
   back.className = "back";
   back.type = "button";
   back.textContent = "← Все папки";
-  back.addEventListener("click", () => renderAlbums(box, project));
+  back.addEventListener("click", () => {
+    renderAlbums(box, project);
+    box.querySelector(".album")?.focus({ preventScroll: true });
+  });
   const title = document.createElement("span");
-  title.textContent = `📁 ${album.name} · ${album.count} фото`;
+  title.textContent = `${album.name} · ${album.count} фото`;
   bar.append(back, title);
   box.appendChild(bar);
 
   renderGallery(box, album);
+  replayFade(box);
+  back.focus({ preventScroll: true });
 }
 
 function renderGallery(box, { folder, count }) {
@@ -240,6 +258,7 @@ function renderGallery(box, { folder, count }) {
     img.src = `${folder}/thumbs/${name}`;
     img.alt = "";
     img.loading = "lazy";
+    img.decoding = "async";
     btn.appendChild(img);
     btn.addEventListener("click", () => openLightbox(i - 1));
     box.appendChild(btn);
@@ -250,16 +269,21 @@ const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
 const lightboxCount = document.getElementById("lightbox-count");
 
+let lightboxOpener = null;
+
 function openLightbox(index) {
+  lightboxOpener = document.activeElement;
   galleryIndex = index;
   updateLightbox();
   lightbox.hidden = false;
   document.body.style.overflow = "hidden";
+  document.getElementById("lightbox-close").focus({ preventScroll: true });
 }
 
 function closeLightbox() {
   lightbox.hidden = true;
   document.body.style.overflow = "";
+  lightboxOpener?.focus?.({ preventScroll: true });
 }
 
 function stepLightbox(delta) {
@@ -269,6 +293,7 @@ function stepLightbox(delta) {
 
 function updateLightbox() {
   lightboxImg.src = galleryPhotos[galleryIndex];
+  lightboxImg.alt = `Фото с мероприятия, ${galleryIndex + 1} из ${galleryPhotos.length}`;
   lightboxCount.textContent = `${galleryIndex + 1} / ${galleryPhotos.length}`;
   // Заранее подгружаем соседнее фото, чтобы листать без задержки
   new Image().src = galleryPhotos[(galleryIndex + 1) % galleryPhotos.length];
@@ -284,6 +309,14 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeLightbox();
   if (e.key === "ArrowLeft") stepLightbox(-1);
   if (e.key === "ArrowRight") stepLightbox(1);
+  // Фокус не уходит из окна просмотра
+  if (e.key === "Tab") {
+    const items = [...lightbox.querySelectorAll("button")];
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
 });
 
 // Листание свайпом на телефоне
@@ -302,16 +335,20 @@ renderProjects();
 document.getElementById("year").textContent = new Date().getFullYear();
 
 // Разделы плавно появляются, когда до них доходит прокрутка
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
-
-document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+const revealItems = document.querySelectorAll(".reveal");
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: "0px 0px -8% 0px" });
+  revealItems.forEach((el) => observer.observe(el));
+} else {
+  revealItems.forEach((el) => el.classList.add("visible"));
+}
 
 // ===== Меню =====
 const nav = document.getElementById("nav");
@@ -319,15 +356,31 @@ const burger = document.getElementById("burger");
 const menu = document.getElementById("menu");
 
 // После прокрутки меню получает тёмную подложку
-function updateNav() { nav.classList.toggle("scrolled", window.scrollY > 40); }
+const fab = document.querySelector(".fab");
+const hero = document.getElementById("top");
+function updateNav() {
+  nav.classList.toggle("scrolled", window.scrollY > 40);
+  // Кнопка WhatsApp появляется, когда первый экран почти прокручен
+  fab?.classList.toggle("is-hidden", window.scrollY < hero.offsetHeight * 0.6);
+}
 updateNav();
 window.addEventListener("scroll", updateNav, { passive: true });
 
 // Бургер на телефоне
 function setMenu(open) {
   menu.classList.toggle("open", open);
-  burger.setAttribute("aria-expanded", open);
+  nav.classList.toggle("menu-open", open);
+  burger.setAttribute("aria-expanded", String(open));
   burger.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
 }
 burger.addEventListener("click", () => setMenu(!menu.classList.contains("open")));
 menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+// Закрыть меню: Esc или нажатие мимо него
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && menu.classList.contains("open")) { setMenu(false); burger.focus(); }
+});
+document.addEventListener("click", (e) => {
+  if (menu.classList.contains("open") && !nav.contains(e.target)) setMenu(false);
+});
+// При переходе на широкий экран меню не остаётся «открытым»
+window.matchMedia("(min-width: 861px)").addEventListener("change", (e) => { if (e.matches) setMenu(false); });
