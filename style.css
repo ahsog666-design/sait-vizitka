@@ -216,7 +216,7 @@ h1, h2, h3 { text-wrap: balance; }
   z-index: -1;
   background:
     linear-gradient(90deg, rgba(10, 13, 11, 0.92) 0%, rgba(10, 13, 11, 0.6) 50%, rgba(10, 13, 11, 0.3) 100%),
-    url("images/tram/1/01.jpg") center 30% / cover no-repeat;
+    url("images/georgiy-portrait.jpg") center 20% / cover no-repeat;
   filter: grayscale(0.85) contrast(1.05);
   animation: slow-zoom 24s ease-in-out infinite alternate;
 }
@@ -771,7 +771,7 @@ footer a:hover { color: var(--accent-2); }
     padding-top: calc(var(--nav-h) + var(--safe-t) + 120px);
     padding-bottom: calc(48px + var(--safe-b));
   }
-  .hero-bg { background-position: 0 0, 60% 30%; }
+  .hero-bg { background-position: 0 0, center 20%; }
   /* Значок — в правом верхнем углу первого экрана, чтобы не спорить с кнопками */
   .badge { width: 96px; height: 96px; right: max(var(--gutter), var(--safe-r)); top: calc(var(--nav-h) + var(--safe-t) + 16px); bottom: auto; }
   .badge text { font-size: 10.5px; }
