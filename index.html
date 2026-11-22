@@ -34,6 +34,7 @@
 
   <!-- ===== Меню сверху ===== -->
   <header class="nav" id="nav">
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
     <a class="logo" href="#top" aria-label="Георгий Ермаков — наверх">ГЕОРГИЙ<span>ЕРМАКОВ</span></a>
     <nav class="menu" id="menu" aria-label="Разделы сайта">
       <a href="#top">Главная</a>
@@ -57,16 +58,17 @@
         <a class="btn outline" href="#projects">Смотреть проекты</a>
       </div>
     </div>
-
-    <!-- Вращающийся значок «смотреть проекты» -->
-    <a class="badge" href="#projects" aria-label="Смотреть проекты">
-      <svg viewBox="0 0 120 120" aria-hidden="true">
-        <defs><path id="circle" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
-        <text><textPath href="#circle" textLength="274" lengthAdjust="spacing">СМОТРЕТЬ ПРОЕКТЫ · СМОТРЕТЬ ПРОЕКТЫ ·</textPath></text>
-      </svg>
-      <svg class="badge-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg>
-    </a>
   </section>
+
+  <!-- Вращающийся значок «смотреть проекты»: закреплён на экране и едет вместе с прокруткой.
+       Стоит вне первого экрана, чтобы телефонные браузеры не прятали его вместе с ним. -->
+  <a class="badge" href="#projects" aria-label="Смотреть проекты">
+    <svg viewBox="0 0 120 120" aria-hidden="true">
+      <defs><path id="circle" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
+      <text><textPath href="#circle" textLength="274" lengthAdjust="spacing">СМОТРЕТЬ ПРОЕКТЫ · СМОТРЕТЬ ПРОЕКТЫ ·</textPath></text>
+    </svg>
+    <svg class="badge-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg>
+  </a>
 
   <main>
     <!-- ===== Обо мне ===== -->
@@ -98,15 +100,19 @@
         <p class="section-lead">Могу просто провести вечер, а могу вместе с вами придумать его с нуля.</p>
       </div>
       <ul class="pills">
-        <li>Корпоративы</li>
-        <li>Тимбилдинги</li>
-        <li>Вечеринки</li>
-        <li>Праздники</li>
-        <li>Частные события</li>
-        <li>Выездные мероприятия</li>
-        <li>Концепция и сценарий</li>
-        <li>Арт-дирекшн</li>
+        <li><a href="https://wa.me/77773482369?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%93%D0%B5%D0%BE%D1%80%D0%B3%D0%B8%D0%B9%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BA%D0%BE%D1%80%D0%BF%D0%BE%D1%80%D0%B0%D1%82%D0%B8%D0%B2%D0%B0." target="_blank" rel="noopener">Корпоративы</a></li>
+        <li><a href="https://wa.me/77773482369?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%93%D0%B5%D0%BE%D1%80%D0%B3%D0%B8%D0%B9%21%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D1%82%D0%B8%D0%BC%D0%B1%D0%B8%D0%BB%D0%B4%D0%B8%D0%BD%D0%B3%20%D0%B4%D0%BB%D1%8F%20%D0%BD%D0%B0%D1%88%D0%B5%D0%B9%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%8B." target="_blank" rel="noopener">Тимбилдинги</a></li>
+        <li><a href="https://wa.me/77773482369?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%93%D0%B5%D0%BE%D1%80%D0%B3%D0%B8%D0%B9%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D0%B5%D1%87%D0%B5%D1%80%D0%B8%D0%BD%D0%BA%D0%B8." target="_blank" rel="noopener">Вечеринки</a></li>
+        <li><a href="https://wa.me/77773482369?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%93%D0%B5%D0%BE%D1%80%D0%B3%D0%B8%D0%B9%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BF%D1%80%D0%B0%D0%B7%D0%B4%D0%BD%D0%B8%D0%BA%D0%B0." target="_blank" rel="noopener">Праздники</a></li>
+        <li><a href="https://wa.me/77773482369?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%93%D0%B5%D0%BE%D1%80%D0%B3%D0%B8%D0%B9%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%BE%D0%B5%20%D0%BC%D0%B5%D1%80%D0%BE%D0%BF%D1%80%D0%B8%D1%8F%D1%82%D0%B8%D0%B5." target="_blank" rel="noopener">Частные события</a></li>
+        <li><a href="https://wa.me/77773482369?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%93%D0%B5%D0%BE%D1%80%D0%B3%D0%B8%D0%B9%21%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%B2%D1%8B%D0%B5%D0%B7%D0%B4%D0%BD%D0%BE%D0%B5%20%D0%BC%D0%B5%D1%80%D0%BE%D0%BF%D1%80%D0%B8%D1%8F%D1%82%D0%B8%D0%B5." target="_blank" rel="noopener">Выездные мероприятия</a></li>
+        <li><a href="https://wa.me/77773482369?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%93%D0%B5%D0%BE%D1%80%D0%B3%D0%B8%D0%B9%21%20%D0%9D%D1%83%D0%B6%D0%BD%D0%B0%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%20%D1%81%20%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D0%BF%D1%86%D0%B8%D0%B5%D0%B9%20%D0%B8%20%D1%81%D1%86%D0%B5%D0%BD%D0%B0%D1%80%D0%B8%D0%B5%D0%BC%20%D0%BC%D0%B5%D1%80%D0%BE%D0%BF%D1%80%D0%B8%D1%8F%D1%82%D0%B8%D1%8F." target="_blank" rel="noopener">Концепция и сценарий</a></li>
+        <li><a href="https://wa.me/77773482369?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%93%D0%B5%D0%BE%D1%80%D0%B3%D0%B8%D0%B9%21%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%B0%D1%80%D1%82-%D0%B4%D0%B8%D1%80%D0%B5%D0%BA%D1%88%D0%BD%20%D0%BC%D0%B5%D1%80%D0%BE%D0%BF%D1%80%D0%B8%D1%8F%D1%82%D0%B8%D1%8F." target="_blank" rel="noopener">Арт-дирекшн</a></li>
       </ul>
+      <div class="section-cta">
+        <p>Не нашли свой формат? Расскажите идею — придумаем вместе.</p>
+        <a class="btn primary" href="#contacts">Обсудить мероприятие</a>
+      </div>
     </section>
 
     <!-- ===== Опыт ===== -->
@@ -153,6 +159,10 @@
       <div class="tabs" id="project-tabs" role="tablist" aria-label="Проекты"></div>
       <p class="project-text" id="project-text" hidden></p>
       <div class="videos" id="videos"></div>
+      <div class="section-cta">
+        <p>Хотите такое же настроение на своём событии?</p>
+        <a class="btn primary" href="#contacts">Связаться</a>
+      </div>
     </section>
 
     <!-- МЕСТО ДЛЯ ОТЗЫВОВ: раздел с реальными отзывами клиентов (имя, компания, текст)
@@ -183,6 +193,11 @@
             <span class="contact-name">Instagram</span><span class="contact-value">@g.ermakov</span>
             <span class="contact-arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4 12L12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </a>
+          <!-- QR-код на Инстаграм: удобно отсканировать с телефона, когда сайт открыт на компьютере -->
+          <a class="contact-qr" href="https://www.instagram.com/g.ermakov/" target="_blank" rel="noopener">
+            <img src="images/qr-instagram.svg" alt="QR-код на Instagram @g.ermakov" width="132" height="132" loading="lazy" decoding="async">
+            <span class="contact-qr-text"><b>Наведите камеру телефона</b>и откроется Instagram @g.ermakov</span>
+          </a>
         </div>
       </div>
     </section>
@@ -201,9 +216,10 @@
   <!-- Просмотр фото на весь экран -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фото" hidden>
     <button class="lb-btn lb-close" id="lightbox-close" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <button class="lb-btn lb-prev" id="lightbox-prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="lb-btn lb-prev" id="lightbox-prev" type="button" aria-label="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
     <img id="lightbox-img" alt="Фото с мероприятия">
-    <button class="lb-btn lb-next" id="lightbox-next" type="button" aria-label="Следующее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    <video id="lightbox-video" controls playsinline preload="metadata" hidden></video>
+    <button class="lb-btn lb-next" id="lightbox-next" type="button" aria-label="Вперёд"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
     <div class="lb-count" id="lightbox-count" aria-live="polite"></div>
   </div>
 
