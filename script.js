@@ -237,7 +237,7 @@ function renderCurve(box, videos) {
       card.className = "curve-card";
       card.setAttribute("aria-label", `Смотреть видео ${i + 1} из ${videos.length}`);
       if (k >= videos.length) card.tabIndex = -1; // повторы не мешают навигации с клавиатуры
-      card.innerHTML = `${v.poster ? `<img src="${v.poster}" alt="" loading="lazy" decoding="async" draggable="false">` : ""}<span class="curve-play">${PLAY_ICON}</span>`;
+      card.innerHTML = `${v.poster ? `<img src="${v.poster}" alt="" decoding="async" draggable="false">` : ""}<span class="curve-play">${PLAY_ICON}</span>`;
       card.addEventListener("click", (e) => {
         if (moved > 6) { e.preventDefault(); return; }
         galleryPhotos = items;
