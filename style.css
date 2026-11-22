@@ -828,8 +828,8 @@ footer a:hover { color: var(--accent-2); }
 .video-info { padding: 14px 16px; }
 .video-info h3 { margin: 0 0 4px; font-size: 16px; }
 .video-info p { margin: 0; font-size: 14px; color: var(--muted); }
-/* Видео рядом с папками фотоотчётов */
-.album-video { align-self: start; margin-top: 10px; }
+/* Видео под папками фотоотчётов — та же 3D-лента, что в Teambuilding */
+.album-curve { grid-column: 1 / -1; margin-top: 8px; }
 
 .empty { grid-column: 1 / -1; text-align: center; padding: 32px 16px; border: 1.5px dashed var(--line); border-radius: var(--r-md); color: var(--muted); }
 

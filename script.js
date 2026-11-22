@@ -363,6 +363,8 @@ let galleryIndex = 0;
 
 // Список папок с фотоотчётами
 function renderAlbums(box, project) {
+  carouselStop?.();
+  carouselStop = null;
   box.innerHTML = "";
   box.classList.remove("gallery");
   box.classList.add("albums");
@@ -395,17 +397,20 @@ function renderAlbums(box, project) {
     box.appendChild(btn);
   });
 
-  // Видео проекта — рядом с папками
-  (project.videos || []).forEach((p) => {
-    const card = makeVideoCard(p);
-    card.classList.add("album-video");
-    box.appendChild(card);
-  });
+  // Видео проекта — 3D-лентой под папками, как в Teambuilding
+  if (project.videos?.length) {
+    const strip = document.createElement("div");
+    strip.className = "album-curve";
+    box.appendChild(strip);
+    renderCurve(strip, project.videos);
+  }
   replayFade(box);
 }
 
 // Открытая папка: кнопка «Назад» и сетка фото
 function openAlbum(box, project, album) {
+  carouselStop?.();
+  carouselStop = null;
   box.innerHTML = "";
   box.classList.remove("albums");
   box.classList.add("gallery");
